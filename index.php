@@ -22,7 +22,7 @@
                 <input type="password" name="senha" placeholder="Senha">
             </div>
             <button class="btn-login" type="submit">Login</button>
-            <button class="btn-cadastro"><a href="/pages/cadastro.html">Realize seu cadastro</a></button>
+            <button class="btn-cadastro"><a href="/pages/cadastro.php">Realize seu cadastro</a></button>
         </form>
 
         <?php

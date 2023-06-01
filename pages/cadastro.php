@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,10 @@
     <link rel="stylesheet" href="/style/cadastro.css">
     <title>Cadastro</title>
 </head>
+
 <body>
     <div class="main-login">
-        <form action="" class="card-login">
+        <form action="cadastro.php" method="POST" class="card-login">
             <h1>Realize seu cadastro</h1>
             <div class="textfield">
                 <label for="usuario">Usuário</label>
@@ -31,11 +33,25 @@
                 <input type="password" name="conf-senha" placeholder="Digite sua senha">
             </div>
 
-            <button class="btn-login"><a href="#">Salvar</a></button>
+            <button class="btn-login" type="submit" name="cadastro">Salvar</button>
 
+            <?php
+            require_once "../database/funcBanco.php";
 
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["cadastro"])) {
+                $nome = $_POST["usuario"];
+                $email = $_POST["email"];
+                $senha = $_POST["senha"];
+
+                if (!empty($email)) {
+                    cadastroUsuario($nome, $email, $senha);
+                } else {
+                    echo "<script>alert('O campo de e-mail é obrigatório.');</script>"; 
+                }               
+            }
+            ?>
         </form>
     </div>
-    
 </body>
+
 </html>

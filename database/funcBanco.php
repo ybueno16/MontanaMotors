@@ -7,7 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["login"]) && $_POST["login"] == "verificarLogin") {
         verificarLogin($conexao);
     } elseif (isset($_POST["acao"]) && $_POST["acao"] == "cadastroUsuario") {
-        die;
+        $nome = $_POST["usuario"];
+        $email = $_POST["email"];
+        $senha = $_POST["senha"];
+
+        cadastroUsuario($nome, $email, $senha);
     }
 }
 
@@ -38,18 +42,25 @@ function cadastroUsuario($nome, $email, $senha)
 {
     global $conexao;
 
-    $nome = mysqli_real_escape_string($conexao, $nome);
-    $email = mysqli_real_escape_string($conexao, $email);
-    $senha = mysqli_real_escape_string($conexao, $senha);
+    $query = "INSERT INTO usuario (nome_usuario, email_usuario, senha_usuario) VALUES (?, ?, ?)";
+    $stmt = $conexao->prepare($query);
+    if ($stmt) {
+        $stmt->bind_param("sss", $nome, $email, $senha);
+        $resultado = $stmt->execute();
 
-    $query = "INSERT INTO usuario (nome_usuario, email_usuario, senha_usuario) VALUES ('$nome', '$email', '$senha')";
+        if ($resultado) {
+            echo "Valores inseridos com sucesso!";
+        } else {
+            echo "Erro na inserção: " . $stmt->error;
+        }
 
-    if ($conexao->query($query) === TRUE) {
-        echo "Valores inseridos com sucesso!";
+        $stmt->close();
     } else {
-        echo "Erro na inserção: " . $conexao->error;
+        echo "Erro na preparação da declaração: " . $conexao->error;
     }
 }
+
+
 
 function buscarID($email)
 {
