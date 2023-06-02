@@ -9,11 +9,8 @@ function connBanco(){
     $conexao = new mysqli($servidorBanco, $usuarioBanco, $senhaBanco, $nomeBanco);
 
     // Verifica se ocorreu algum erro na conexão
-    if ($conexao->connect_errno) {
-        die("Falha na conexão com o banco de dados: " . $conexao->connect_error);
-    }
-    else {
-        
+    if (mysqli_connect_errno()) {
+        die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
     }
 
     // Configura o conjunto de caracteres para UTF-8
@@ -22,5 +19,13 @@ function connBanco(){
     // Retorna a conexão estabelecida
     return $conexao;
 }
-?>
 
+function conectar() {
+    return connBanco();
+}
+
+function desconectar($conexao) {
+    // Fecha a conexão com o banco de dados
+    $conexao->close();
+}
+?>

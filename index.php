@@ -33,7 +33,7 @@
                 $senha = $_POST["senha"];
         
                 if (verificarLogin($conexao)) {
-                    header("Location: /pages/Home/dashboard.html");
+                    header("Location: /pages/Home/dashboard.php");
                     exit();
                 } else {
                     echo "<script>

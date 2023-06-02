@@ -25,7 +25,7 @@ function verificarLogin($conexao)
         $resultado = $conexao->query($query);
 
         if ($resultado && $resultado->num_rows > 0) {
-            header("Location: /pages/Home/dashboard.html");
+            header("Location: /pages/Home/dashboard.php");
             exit();
         } else {
             echo "<script>window.location.href='/index.php?erro=1';</script>";
@@ -80,26 +80,80 @@ function buscarID($email)
 
 
 
-function atualizarUsuario($email, $nome, $senha)
+function listarUsuarios()
 {
     global $conexao;
 
-    $nome = mysqli_real_escape_string($conexao, $nome);
-    $senha = mysqli_real_escape_string($conexao, $senha);
-    $email = mysqli_real_escape_string($conexao, $email);
+    $query = "SELECT * FROM usuario";
+    $result = $conexao->query($query);
 
-    $id = buscarID($email);
-
-    if ($id === true) {
-        $query = "UPDATE nome_usuario SET nome_usuario = '$nome', senha_usuario = '$senha' WHERE id_usuario = $id";
-
-        if ($conexao->query($query) === TRUE) {
-            echo "Registro atualizado com sucesso!";
-        } else {
-            echo "Erro na atualização: " . $conexao->error;
+    if ($result->num_rows > 0) {
+        $usuarios = array();
+        while ($row = $result->fetch_assoc()) {
+            $usuarios[] = $row;
         }
+        return $usuarios;
     } else {
-        echo "Usuário não encontrado.";
+        return array();
     }
 }
-?>
+
+function excluirUsuario($idUsuario)
+{
+    global $conexao;
+
+    $query = "DELETE FROM usuario WHERE id_usuario = ?";
+    $stmt = $conexao->prepare($query);
+
+    if ($stmt) {
+        $stmt->bind_param("i", $idUsuario);
+        $resultado = $stmt->execute();
+
+        if ($resultado) {
+            echo "Usuário excluído com sucesso!";
+        } else {
+            echo "Erro na exclusão: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        echo "Erro na preparação da declaração: " . $conexao->error;
+    }
+}
+
+
+function buscarUsuarioPorID($idUsuario) {
+    $conexao = connBanco();
+    
+    $query = "SELECT * FROM usuario WHERE id_usuario = $idUsuario";
+    $resultado = mysqli_query($conexao, $query);
+    
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        $usuario = mysqli_fetch_assoc($resultado);
+        mysqli_free_result($resultado);
+        desconectar($conexao);
+        return $usuario;
+    } else {
+        desconectar($conexao);
+        return null;
+    }
+}
+  
+  
+function atualizarUsuario($idUsuario, $nome, $email) {
+    $conexao = connBanco();
+    $query = "UPDATE usuario SET nome_usuario = '$nome', email_usuario = '$email' WHERE id_usuario = '$idUsuario'";
+    $resultado = mysqli_query($conexao, $query);
+
+    desconectar($conexao);
+
+    if ($resultado) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+  
+  
