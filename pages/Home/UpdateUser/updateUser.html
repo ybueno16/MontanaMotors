@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/Home/UpdateUser/upateUser.css" />
+    <link
+      href="https://unpkg.com/css.gg@2.0.0/icons/css/search.css"
+      rel="stylesheet"
+    />
+    <title>dashboard</title>
+  </head>
+  <body>
+    <div class="App">
+      <aside class="menu-lateral">
+        <div class="image-logo">
+          <img src="/Images/logo montana.jpg" alt="" />
+        </div>
+
+        <div class="content-itens-menu">
+          <a href="/pages/Home/dashboard.html">Home</a>
+          <a href="/pages/Home/Estoque/dashboardEstoque.html">Estoque</a>
+        </div>
+
+        <div class="sair">
+          <a href="/Login/login.html">Sair</a>
+        </div>
+      </aside>
+
+      <div class="main-dashboard">
+        <form action="" class="card-update">
+          <h1>Insira os novos dados</h1>
+          <div class="textfield">
+            <label for="usuario">Usuário</label>
+            <input type="text" name="usuario" placeholder="Usuário" />
+          </div>
+
+          <div class="textfield">
+            <label for="email">E-mail</label>
+            <input type="email" name="email" placeholder="Digite seu e-mail" />
+          </div>
+
+          <div class="textfield">
+            <label for="senha">Senha</label>
+            <input
+              type="password"
+              name="senha"
+              placeholder="Digite sua senha"
+            />
+          </div>
+
+          <div class="textfield">
+            <label for="conf-senha">Confirme sua senha</label>
+            <input
+              type="password"
+              name="conf-senha"
+              placeholder="Digite sua senha"
+            />
+          </div>
+
+          <button class="btn-login"><a href="#">Salvar</a></button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
