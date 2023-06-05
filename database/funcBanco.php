@@ -62,24 +62,6 @@ function cadastroUsuario($nome, $email, $senha)
 
 
 
-function buscarID($email)
-{
-    global $conexao;
-    $email = mysqli_real_escape_string($conexao, $email);
-
-    $query = "SELECT id_usuario FROM usuario WHERE email_usuario = '$email'";
-    $resultado = $conexao->query($query);
-
-    if ($resultado->num_rows > 0) {
-        $row = $resultado->fetch_assoc();
-        return $row['id_usuario'];
-    } else {
-        return false;
-    }
-}
-
-
-
 function listarUsuarios()
 {
     global $conexao;
